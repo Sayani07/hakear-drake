@@ -3,11 +3,12 @@
 ##' .. content for \details{} ..
 ##'
 ##' @title
-##' @param nameme1
+##' @param norm_data1
+##' @param nsim
 ##' @return
 ##' @author Sayani07
 ##' @export
-file_out <- function(nameme1 = "doc/null_distribution.pdf") {
+create_sim_n <- function(norm_data1, nsim = 500) {
 
   NULL
 
