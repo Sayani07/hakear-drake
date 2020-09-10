@@ -1,0 +1,55 @@
+---
+title: "Untitled Draft"
+author: "Report Author"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(echo = FALSE)
+#source("../_drake.R")
+```
+```{r}
+library(drake)
+library(distributional)
+library(tidyverse)
+library(ggplot2)
+loadd()
+```
+
+
+```{r}
+#norm_data_n_nlev
+```
+
+```{r}
+#plot_norm_n_nlev
+```
+
+
+## Analysis
+
+## Reproducibility
+
+<details><summary>Reproducibility receipt</summary>
+
+```{r}
+## datetime
+Sys.time()
+
+## repository
+if(requireNamespace('git2r', quietly = TRUE)) {
+  git2r::repository()
+} else {
+  c(
+    system2("git", args = c("log", "--name-status", "-1"), stdout = TRUE),
+    system2("git", args = c("remote", "-v"), stdout = TRUE)
+  )
+}
+
+## session info
+sessionInfo()
+```
+
+</details>
