@@ -1,6 +1,6 @@
 ---
 title: "Untitled Draft"
-author: "Report Author"
+author: "Sayani Gupta"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
 ---
@@ -20,15 +20,35 @@ loadd()
 
 
 ```{r}
-#norm_data_n_nlev
+# norm_data_n_nlev =  create_sim_nlev(nlevel = 2:30, nsim = 500, nperm = 2000)
+norm_data_n_nlev
 ```
+- Normalisation doesn't work with (max - mean(max))/sd(max) where mean and sd are computed by sampling with replacement many times.
 
 ```{r}
-#plot_norm_n_nlev
+# plot_norm_n_nlev = plot_sim_nlev(norm_data_n_nlev, nlev = 2:20)
+plot_norm_n_nlev
+```
+
+- Try with normalisation you had before but compute the mean and sd using bootstrap/permutation
+
+```{r}
+
 ```
 
 
-## Analysis
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+
+
 
 ## Reproducibility
 

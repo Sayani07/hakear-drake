@@ -1,12 +1,12 @@
 library(drake)
 the_plan <-
+  no_deps(
   drake_plan(
 
     ## Plan targets in here.
 
     # create simulated data with n levels from distribution sim_dist
-    #sim = distributional::dist_normal(5, 10)
-    sim_data_1 = create_data_sim1(nlevel = 2, sim_dist),
+    sim_data_1 = create_data_sim1(nlevel = 2, sim_dist = distributional::dist_normal(5, 10)),
     #create_data_sim1 = function(nlevel, sim_dist)
 
       # sample with repition from the data set create_data_sim1 nperm times
@@ -22,9 +22,11 @@ the_plan <-
     
     # Do it for many levels
     
-    norm_data_n_nlev =  create_sim_nlev(nlevel = 2:20, nsim = 50, nperm = 100),
+    norm_data_n_nlev =  create_sim_nlev(nlevel = 2:30, nsim = 500, nperm = 2000),
     
-    plot_norm_n_nlev = plot_sim_nlev(norm_data_n_nlev, nlev = 5:20),
+    plot_norm_n_nlev = plot_sim_nlev(norm_data_n_nlev, nlev = 2:20),
+    
+    
   
               # analysis file
     target_name = target(
@@ -33,6 +35,7 @@ the_plan <-
         file_out("doc/null_distribution.html")
       }
     )
+  )
     
     
   )

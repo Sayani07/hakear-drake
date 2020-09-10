@@ -10,7 +10,7 @@
 ##' @export
 plot_sim_nlev <- function(norm_data_n_nlev, nlev = 5:20) {
   norm_data_n_nlev %>% 
-    filter(nlevel %in% nlev) %>% 
+    dplyr::filter(nlevel %in% nlev) %>% 
     ggplot(aes(x = norm_max)) + geom_histogram() +
     facet_wrap(~nlevel)
 
