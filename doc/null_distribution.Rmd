@@ -33,17 +33,20 @@ plot_norm_n_nlev
 - Try with normalisation you had before but compute the mean and sd using bootstrap/permutation
 
 ```{r}
+# (3,3)
+```
 
+```{r}
+# (3,7)
 ```
 
 
 ```{r}
-
+# (7,3)
 ```
 
-
 ```{r}
-
+# distribution of last three cases simulated 500 times plotted
 ```
 
 
