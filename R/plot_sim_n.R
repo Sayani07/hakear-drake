@@ -8,7 +8,6 @@
 ##' @author Sayani07
 ##' @export
 plot_sim_n <- function(norm_data_n) {
-
-  NULL
-
+norm_data_n %>%
+    ggplot(aes(x = norm_max)) + geom_histogram()
 }

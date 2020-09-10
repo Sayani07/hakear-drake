@@ -9,14 +9,7 @@
 ##' @author Sayani07
 ##' @export
 create_data_sim1 <- function(nlevel = 2, sim_dist = dist_normal(5,10)) {
-
-   (1:nlevel) %>%
-    purrr::map(function(i) {
       x <- sim_dist %>%
-        distributional::generate(nlevel)
-      
-     x %>%  unlist()
-    
-    })
-
+      generate(nlevel)
+      unlist(x)
 }
