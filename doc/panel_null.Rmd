@@ -9,6 +9,29 @@ output: html_document
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+
+```{r}
+library(drake)
+library(distributional)
+library(tidyverse)
+library(ggplot2)
+loadd()
+source("./_drake.R")
+```
+
+```{r}
+plot_sim = plot_simulations(data_sim)
+```
+
+```{r}
+ plot_sim_3_7 = plot_simulations(data_sim_3_7)
+```
+
+```{r}
+ plot_sim_7_3 = plot_simulations(data_sim_3_7)
+```
+
+
 ## Analysis
 
 ## Reproducibility

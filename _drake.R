@@ -8,5 +8,8 @@ lapply(list.files("./R", full.names = TRUE), source)
 ## The arguments to drake_config() are basically the same as those to make().
 ## lock_envir allows functions that alter the random seed to be used. The biggest
 ## culprits of this seem to be interactive graphics e.g. plotly and mapdeck.
-drake_config(the_plan,
+#drake_config(the_plan,
+#             lock_envir = FALSE)
+
+drake_config(my_plan,
              lock_envir = FALSE)

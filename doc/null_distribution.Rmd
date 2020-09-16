@@ -8,7 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 library(knitr)
 opts_chunk$set(echo = FALSE)
-#source("../_drake.R")
+drake::r_make()
 ```
 ```{r}
 library(drake)
