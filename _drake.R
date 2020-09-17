@@ -11,5 +11,5 @@ lapply(list.files("./R", full.names = TRUE), source)
 #drake_config(the_plan,
 #             lock_envir = FALSE)
 
-drake_config(my_plan,
+drake_config(the_plan,
              lock_envir = FALSE)

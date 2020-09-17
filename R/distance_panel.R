@@ -9,7 +9,8 @@
 ##' @return
 ##' @author Sayani07
 ##' @export
-distance_panel <- function(sim_panel_quantiles, 
+distance_panel <- function(sim_panel_quantiles,
+                           quantile_prob = seq(0.01, 0.99, 0.01),
                            dist_ordered = TRUE) {
   ncoly <- ncol(sim_panel_quantiles)
   nrowy <- nrow(sim_panel_quantiles)
@@ -20,8 +21,8 @@ distance_panel <- function(sim_panel_quantiles,
         purrr::map_dfc(function(i) {
           dist <- ((i + 1):ncoly) %>%
             purrr::map_dfc(function(j) {
-              m1 <- y %>% magrittr::extract(k,i) %>% unlist()
-              m2 <- y %>% magrittr::extract(k,j) %>% unlist()
+              m1 <- sim_panel_quantiles %>% magrittr::extract(k,i) %>% unlist()
+              m2 <- sim_panel_quantiles %>% magrittr::extract(k,j) %>% unlist()
               z <- JS(prob = quantile_prob, m1, m2)
               if (dist_ordered) {
                 if (j != i + 1) {

@@ -1,36 +1,127 @@
 ---
-title: "Untitled Draft"
-author: "Report Author"
+title: "MMPD"
+author: "Sayani Gupta"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+library(knitr)
+knitr::opts_chunk$set(echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>",
+  fig.path = "figure/",
+  fig.align = "center",
+  fig.show = "hold",
+  cache = TRUE,
+  cache.path = "cache/")
+
+knitr::opts_knit$set(root.dir = here::here())
+knitr::read_chunk('../_drake.R')
+knitr::read_chunk('../packages.R')
+
+#drake::loadd()
+
 ```
 
-## Analysis
-
-## Reproducibility
-
-<details><summary>Reproducibility receipt</summary>
-
-```{r}
-## datetime
-Sys.time()
-
-## repository
-if(requireNamespace('git2r', quietly = TRUE)) {
-  git2r::repository()
-} else {
-  c(
-    system2("git", args = c("log", "--name-status", "-1"), stdout = TRUE),
-    system2("git", args = c("remote", "-v"), stdout = TRUE)
-  )
-}
-
-## session info
-sessionInfo()
+```{r load}
+source("./packages.R")
+source("./_drake.R")
+library(tidyverse)
+library(ggplot2)
+library(distributional)
+library(drake)
 ```
 
-</details>
+```{r level23}
+nsim = 250
+set.seed(99)
+nx = 2
+nfacet = 3
+MMPD_data23 <- (1:nsim) %>% 
+  purrr::map_df(function(i){
+set.seed(99+i)
+mmpd <- sim_panel(nx = 2, nfacet = 3) %>% 
+  compute_quantiles() %>% 
+  distance_panel() %>% 
+  mpd() %>% 
+  mmpd()
+
+tibble(case = paste0("nx-",nx," ", "nfacet-", nfacet), sim_id = i, mmpd = mmpd)
+  })
+```
+
+```{r plot23}
+MMPD_data23 %>% ggplot(aes(x = mmpd)) + geom_histogram()
+```
+
+
+```{r level73}
+nx = 7
+nfacet = 3
+set.seed(99)
+MMPD_data73 <- (1:nsim) %>% 
+  purrr::map_df(function(i){
+set.seed(99+i)
+mmpd <- sim_panel(nx = 7, nfacet = 3) %>% 
+  compute_quantiles() %>% 
+  distance_panel() %>% 
+  mpd() %>% 
+  mmpd()
+
+
+tibble(case = paste0("nx-",nx," ", "nfacet-", nfacet), sim_id = i, mmpd = mmpd)
+  })
+```
+
+```{r plot73}
+MMPD_data73 %>% ggplot(aes(x = mmpd)) + geom_histogram()
+```
+
+
+```{r level37}
+nx = 3
+nfacet = 7
+set.seed(99)
+MMPD_data37 <- (1:nsim) %>% 
+  purrr::map_df(function(i){
+set.seed(99+i)
+mmpd <- sim_panel(nx = 3, nfacet = 7) %>% 
+  compute_quantiles() %>% 
+  distance_panel() %>% 
+  mpd() %>% 
+  mmpd()
+
+
+tibble(case = paste0("nx-",nx," ", "nfacet-", nfacet), sim_id = i, mmpd = mmpd)
+  })
+```
+
+```{r plot37}
+MMPD_data37 %>% ggplot(aes(x = mmpd)) + geom_histogram()
+```
+
+
+```{r level511}
+nx = 5
+nfacet = 11
+set.seed(99)
+MMPD_data511 <- (1:nsim) %>% 
+  purrr::map_df(function(i){
+set.seed(99+i)
+mmpd <- sim_panel(nx = 5, nfacet = 11) %>% 
+  compute_quantiles() %>% 
+  distance_panel() %>% 
+  mpd() %>% 
+  mmpd()
+
+
+tibble(case = paste0("nx-",nx," ", "nfacet-", nfacet), sim_id = i, mmpd = mmpd)
+  })
+```
+
+```{r plot511}
+MMPD_data511 %>% ggplot(aes(x = mmpd)) + geom_histogram()
+```
+

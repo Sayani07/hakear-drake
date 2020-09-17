@@ -24,8 +24,8 @@ the_plan <-
                                             dist_ordered = FALSE),
       
        # compute mpd - normalised max pairwise distances for each facet
-       normx_data = mpd(distance_panel_data,
-                        nperm = 2000),
+      normx_data = mpd(distance_panel_data,
+                       nperm = 2000),
        # compute mpd - normalised max pairwise distances for each facet       
        normfacet_data = mmpd(normx_data,
                              nperm = 2000),
