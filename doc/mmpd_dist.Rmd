@@ -36,6 +36,7 @@ library(drake)
 
 ```{r level23}
 nsim = 250
+nperm = 1000
 set.seed(99)
 nx = 2
 nfacet = 3
@@ -103,11 +104,11 @@ MMPD_data37 %>% ggplot(aes(x = mmpd)) + geom_histogram()
 ```
 
 
-```{r level511}
-nx = 5
+```{r level311}
+nx = 3
 nfacet = 11
 set.seed(99)
-MMPD_data511 <- (1:nsim) %>% 
+MMPD_data311 <- (1:nsim) %>% 
   purrr::map_df(function(i){
 set.seed(99+i)
 mmpd <- sim_panel(nx = 5, nfacet = 11) %>% 
@@ -121,7 +122,25 @@ tibble(case = paste0("nx-",nx," ", "nfacet-", nfacet), sim_id = i, mmpd = mmpd)
   })
 ```
 
-```{r plot511}
-MMPD_data511 %>% ggplot(aes(x = mmpd)) + geom_histogram()
+```{r plot311}
+MMPD_data311 %>% ggplot(aes(x = mmpd)) + geom_histogram()
+```
+
+Difference between graphs in first row is the different in number of x levels. Difference between graphs in second row is the different in number of facet levels. For both the cases, the shape and scale of the distribution remains the same. But flipping the x-axis and facet levels change the distribution even when all levels are drawn from same distribution.
+
+
+```{r plotnew6}
+library(forcats)
+data_orig <- bind_rows(MMPD_data23, MMPD_data73, MMPD_data311, MMPD_data37) %>% 
+  mutate(case = factor(case, 
+                       levels = c("nx-2 nfacet-3",
+                                  "nx-7 nfacet-3",
+                                  "nx-3 nfacet-11",
+                                  "nx-3 nfacet-7")))
+  
+data_orig %>% ggplot(aes(x = mmpd)) + facet_wrap(~case, ncol = 2) + geom_histogram()
+          
+          
+          #MMPD_data37, MMPD_data73, MMPD_data311) %>% 
 ```
 

@@ -18,7 +18,7 @@ the_plan <-
       sim_panel_quantiles  = compute_quantiles(sim_panel_data,
                                         quantile_prob = seq(0.01, 0.99, 0.01)),
        
-      # compute JS distances for each facet
+      # compute pairwise JS distances for each facet
       
       distance_panel_data  = distance_panel(sim_panel_quantiles, #method = "JS",
                                             dist_ordered = FALSE),
