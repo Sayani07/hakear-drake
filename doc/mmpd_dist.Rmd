@@ -126,7 +126,15 @@ tibble(case = paste0("nx-",nx," ", "nfacet-", nfacet), sim_id = i, mmpd = mmpd)
 MMPD_data311 %>% ggplot(aes(x = mmpd)) + geom_histogram()
 ```
 
-Difference between graphs in first row is the different in number of x levels. Difference between graphs in second row is the different in number of facet levels. For both the cases, the shape and scale of the distribution remains the same. But flipping the x-axis and facet levels change the distribution even when all levels are drawn from same distribution.
+
+## Compare (1,1) vs (1,2) and (2,1) vs (2,2)
+
+Difference between graphs in first row is the different in number of x levels. Difference between graphs in second row is the different in number of facet levels. For both the cases, the shape and scale of the distribution remains the same. 
+
+
+## Compare (1,2) and (2,2)
+
+But flipping the x-axis and facet levels change the distribution even when all levels are drawn from same distribution.This is logical since for normalising the x-axis, we use max and for facets we use median. AND we want to put more emphasis on differences in x-axis levels as than difference in facet-levels. Since, x-axis are from the same distribution and more in number, the final distribution is uniform-like.
 
 
 ```{r plotnew6}
