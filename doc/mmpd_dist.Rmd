@@ -110,15 +110,15 @@ nfacet = 11
 set.seed(99)
 MMPD_data311 <- (1:nsim) %>% 
   purrr::map_df(function(i){
-set.seed(99+i)
-mmpd <- sim_panel(nx = 5, nfacet = 11) %>% 
-  compute_quantiles() %>% 
-  distance_panel() %>% 
-  mpd() %>% 
-  mmpd()
+    set.seed(99+i)
+    mmpd <- sim_panel(nx = 3, nfacet = 11) %>% 
+    compute_quantiles() %>% 
+    distance_panel() %>% 
+    mpd() %>% 
+    mmpd()
 
 
-tibble(case = paste0("nx-",nx," ", "nfacet-", nfacet), sim_id = i, mmpd = mmpd)
+    tibble(case = paste0("nx-",nx," ", "nfacet-", nfacet), sim_id = i, mmpd = mmpd)
   })
 ```
 

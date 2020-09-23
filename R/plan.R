@@ -5,38 +5,73 @@ the_plan <-
 
       ## Plan targets in here.
       
-      # simulate panel data with x levels and facets
-       
-      sim_panel_data  = sim_panel(nx = 4, 
-                                        nfacet = 7,
-                                        ntimes = 500,
+      # simulate many panel data with x levels and facets
+      set.seed(9999),
+      sim_null_orig  = sim_panel_grid(range_nx = 2:4, 
+                                        range_nfacet = 2:4,
+                                        ntimes = 50,
                                         sim_dist = distributional::dist_normal(5, 10)),
+      
+      # plot panel grid
+      
+      plot_sim_null = plot_panel_grid(sim_null_orig),
+      #ggplot(sim_null_orig, aes(x = sim_data)) + geom_histogram() + facet_grid(nx~nfacet)
+      
+      # compute mmpd for each panel
+      
+      mmpd_null_orig = compute_mmpd_panel_grid(sim_null_orig,
+                                     quantile_prob = seq(0.01, 0.99, 0.01),
+                                     dist_ordered = TRUE,
+                                     nperm = 200),
+      # compute mmpd distribution for each panel
+      
+    mmpd_null_dist =   compute_mmpd_null_dist(sim_null_orig,
+                                              nsim = 500),
+     
+    
+    # visualise mmpd distribution for entire panel grid
+    plot_null_grid =   plot_mmpd_null_grid(mmpd_null_dist),  
+     
+      # 
+      # sim_panel_data = slct_lvl_orig(sim_null_orig,
+      #                                  nx = 2,
+      #                                  nfacet = 3),
+      # 
+
       
       
       # compute quantiles of simulated panel data 
       
-      sim_panel_quantiles  = compute_quantiles(sim_panel_data,
-                                        quantile_prob = seq(0.01, 0.99, 0.01)),
+      # sim_panel_quantiles  = compute_quantiles(sim_panel_data,
+      #                                   quantile_prob = seq(0.01, 0.99, 0.01)),
        
       # compute pairwise JS distances for each facet
       
-      distance_panel_data  = distance_panel(sim_panel_quantiles, #method = "JS",
-                                            dist_ordered = FALSE),
+      # distance_panel_data  = distance_panel(sim_panel_quantiles, #method = "JS",
+      #                                       dist_ordered = FALSE),
       
        # compute mpd - normalised max pairwise distances for each facet
-      normx_data = mpd(distance_panel_data,
-                       nperm = 2000),
-       # compute mpd - normalised max pairwise distances for each facet       
-       normfacet_data = mmpd(normx_data,
-                             nperm = 2000),
+      # normx_data = mpd(distance_panel_data,
+      #                  nperm = 2000),
+      #  # compute mmpd - normalised max pairwise distances across all facets       
+      #  # change the function names 
+      #  normfacet_data = mmpd(normx_data,
+      #                        nperm = 2000),
 
       # analysis file
       target_name = target(
         command = {
-          rmarkdown::render(knitr_in("doc/mmpd_dist.Rmd"))
-          file_out("doc/mmpd_dist.html")
+          rmarkdown::render(knitr_in("doc/mmpd_null_dist.Rmd"))
+          file_out("doc/mmpd_null_dist.html")
         }
       )
     )
   )
 
+
+compute_mmpd <- function(nx = 4, nfacet = 7, quantile_prob = seq(0.01, 0.99,
+                         0.01), dist_ordered = TRUE, nperm = 2000) {
+
+  NULL
+
+}
