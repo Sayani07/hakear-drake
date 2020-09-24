@@ -1,5 +1,5 @@
 ---
-title: "Simulation results"
+title: "Characteristics of mmpd"
 author: "Sayani Gupta"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
@@ -26,6 +26,15 @@ library(tidyverse)
 library(knitr)
 loadd()
 ```
+
+## Primary objective: Studying null distribution of MMPD
+
+  - How mmpd varies across x-axis levels for the same facet level?
+  - How mmpd varies across facet levels for the same x-axis level?
+  - Does normalisation work for both x-axis and facets?
+  - If no, is it failing for x-axis, facet or both?
+
+## Approach:
 
 Panel grid of x-axis levels (nx) and facet levels (nfacet). If we see across rows, we will know the effect of changing facets for the same number of x-axis levels and across columns, we will know the effect of changing x-axis levels for the same facet. This would help us to judge if normalisation is not working at one or both levels.
 
@@ -55,6 +64,21 @@ data <- readd(mmpd_dist_null_grid)
 data %>% 
   group_by(nx, nfacet) %>% 
   nest() 
+```
+
+## Step4
+_visualise the distribution of mmpd in each grid_ 
+
+
+```{r}
+readd(plot_dist_null_grid)
+```
+
+## Step5
+_size of the test_ 
+
+```{r}
+readd(plot_dist_null_grid)
 ```
 
 ## Analysis

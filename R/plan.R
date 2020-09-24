@@ -8,9 +8,9 @@ the_plan <-
       
       # simulate many panel data with x levels and facets
       set.seed(9999),
-      sim_null_orig  = sim_panel_grid(range_nx = 2:4, 
-                                        range_nfacet = 2:4,
-                                        ntimes = 50,
+      sim_null_orig  = sim_panel_grid(range_nx = 2:5, 
+                                        range_nfacet = 2:5,
+                                        ntimes = 500,
                                         sim_dist = distributional::dist_normal(5, 10)),
       
       # plot panel grid
@@ -27,12 +27,27 @@ the_plan <-
       # compute mmpd distribution for each panel
     set.seed(54321),  
     mmpd_dist_null_grid =   compute_mmpd_null_dist(sim_null_orig,
-                                              nsim = 5),
+                                              nsim = 10),
      
     
     # visualise mmpd distribution for entire panel grid
-    #plot_dist_null_grid =   plot_mmpd_null_grid(mmpd_dist_null_grid),  
-     
+    plot_dist_null_grid =   plot_mmpd_null_grid(mmpd_dist_null_grid,
+                                                mmpd_null_orig),  
+  
+    
+    # testing power
+    
+    # simulate many panel data with x levels and facets
+    
+    # 
+    # sim_panel_data = slct_lvl_orig(sim_null_orig,
+    #                                  nx = 2,
+    #                                  nfacet = 3),
+    # 
+    
+    
+    
+       
       # 
       # sim_panel_data = slct_lvl_orig(sim_null_orig,
       #                                  nx = 2,
