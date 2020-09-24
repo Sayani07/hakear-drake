@@ -10,6 +10,32 @@
 ##' @export
 compute_mmpd_null_dist <- function(sim_null_orig, nsim = 500) {
 
-  NULL
-
+  nx <- sim_null_orig %>% distinct(nx) %>% .$nx
+  nfacet <- sim_null_orig %>% distinct(nfacet) %>% .$nfacet
+  
+  nsample <- sim_null_orig %>% 
+    group_by(nfacet, nx) %>% 
+    summarise(count = n()) %>% 
+    ungroup() %>% 
+    .$count
+  
+  nested_data <- sim_null_orig %>%
+    group_by(nx, nfacet) %>% 
+    nest() %>% 
+    ungroup() %>% 
+    mutate(n = nsample)
+  
+  (seq_len(nsim)) %>% 
+  map_df(function(i)
+    {
+  shuffled_data <- nested_data %>%
+    mutate(samp = map2(data, n, sample_n)) %>% 
+    select(-data) %>% 
+    unnest(samp)
+  
+  compute_mmpd_panel_grid(shuffled_data,
+                          quantile_prob = seq(0.01, 0.99, 0.01),
+                          dist_ordered = TRUE,
+                          nperm = 200)
+  })
 }

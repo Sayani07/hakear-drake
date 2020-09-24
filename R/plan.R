@@ -1,6 +1,7 @@
 library(drake)
+library(dplyr)
+library(tidyr)
 the_plan <-
-  no_deps(
     drake_plan(
 
       ## Plan targets in here.
@@ -14,7 +15,7 @@ the_plan <-
       
       # plot panel grid
       
-      plot_sim_null = plot_panel_grid(sim_null_orig),
+      #plot_sim_null = plot_panel_grid(sim_null_orig),
       #ggplot(sim_null_orig, aes(x = sim_data)) + geom_histogram() + facet_grid(nx~nfacet)
       
       # compute mmpd for each panel
@@ -24,13 +25,13 @@ the_plan <-
                                      dist_ordered = TRUE,
                                      nperm = 200),
       # compute mmpd distribution for each panel
-      
-    mmpd_null_dist =   compute_mmpd_null_dist(sim_null_orig,
-                                              nsim = 500),
+    set.seed(54321),  
+    mmpd_dist_null_grid =   compute_mmpd_null_dist(sim_null_orig,
+                                              nsim = 5),
      
     
     # visualise mmpd distribution for entire panel grid
-    plot_null_grid =   plot_mmpd_null_grid(mmpd_null_dist),  
+    #plot_dist_null_grid =   plot_mmpd_null_grid(mmpd_dist_null_grid),  
      
       # 
       # sim_panel_data = slct_lvl_orig(sim_null_orig,
@@ -59,19 +60,10 @@ the_plan <-
       #                        nperm = 2000),
 
       # analysis file
-      target_name = target(
+      report = target(
         command = {
           rmarkdown::render(knitr_in("doc/mmpd_null_dist.Rmd"))
           file_out("doc/mmpd_null_dist.html")
         }
       )
     )
-  )
-
-
-compute_mmpd <- function(nx = 4, nfacet = 7, quantile_prob = seq(0.01, 0.99,
-                         0.01), dist_ordered = TRUE, nperm = 2000) {
-
-  NULL
-
-}

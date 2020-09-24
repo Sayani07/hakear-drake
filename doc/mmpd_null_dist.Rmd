@@ -1,12 +1,60 @@
 ---
-title: "Untitled Draft"
-author: "Report Author"
+title: "Simulation results"
+author: "Sayani Gupta"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+library(knitr)
+knitr::opts_chunk$set(echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>",
+  fig.path = "figure/",
+  fig.align = "center",
+  fig.show = "hold",
+  cache = TRUE,
+  cache.path = "cache/")
+
+knitr::opts_knit$set(root.dir = here::here())
+```
+
+```{r load}
+library(drake)
+library(tidyverse)
+library(knitr)
+loadd()
+```
+
+Panel grid of x-axis levels (nx) and facet levels (nfacet). If we see across rows, we will know the effect of changing facets for the same number of x-axis levels and across columns, we will know the effect of changing x-axis levels for the same facet. This would help us to judge if normalisation is not working at one or both levels.
+
+## Step1 
+_*simulate a grid of data for a combination of a range of x-axis and facet levels with same distribution*_
+
+```{r sim_null_orig}
+data <- readd(sim_null_orig)
+data %>% 
+  group_by(nx, nfacet) %>% 
+  nest() 
+```
+
+## Step2 
+_Compute a grid of mmpd for the simulated data in step 1_
+
+```{r}
+readd(mmpd_null_orig)
+
+```
+
+## Step3 
+_Shuffle the data nsim times and compute grids of mmpd like in step 2 */nsim/* times_
+
+```{r}
+data <- readd(mmpd_dist_null_grid)
+data %>% 
+  group_by(nx, nfacet) %>% 
+  nest() 
 ```
 
 ## Analysis
