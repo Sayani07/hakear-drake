@@ -67,15 +67,8 @@ data %>%
 ```
 
 ## Step4
-_visualise the distribution of mmpd in each grid_ 
+_visualise the distribution of mmpd in each grid and the size of the test_ _ 
 
-
-```{r}
-readd(plot_dist_null_grid)
-```
-
-## Step5
-_size of the test_ 
 
 ```{r}
 readd(plot_dist_null_grid)
