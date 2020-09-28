@@ -20,6 +20,6 @@ compute_norm <- function(data_boot, method = "std") {
   
   data_orig %>% 
     group_by(panel_id) %>% 
-    summarise(norm_max = (max(value) - stat_data$mean)/stat_data$sd) %>% summarize(MMPD = median(norm_max)/n())
+    summarise((norm_max = (max(value) - stat_data$mean)/stat_data$sd), .groups = 'drop') %>% summarize(MMPD = median(norm_max)/n())
 
 }
