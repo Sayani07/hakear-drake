@@ -8,7 +8,7 @@
 ##' @return
 ##' @author Sayani07
 ##' @export
-mmpd <- function(normx_data, nperm = 2000) {
+mmpd <- function(sim_panel_data, normx_data, nperm = 20) {
 
   panel_facet <- normx_data %>% select(id_facet, norm_x) 
   
