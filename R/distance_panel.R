@@ -15,12 +15,12 @@ distance_panel <- function(sim_panel_quantiles,
   ncoly <- ncol(sim_panel_quantiles)
   nrowy <- nrow(sim_panel_quantiles)
   
-  (seq_len(nrowy)) %>% 
-    purrr::map_dfr(function(k) {
-      dist_facet <- (2:(ncoly-1)) %>%
-        purrr::map_dfc(function(i) {
-          dist <- ((i + 1):ncoly) %>%
-            purrr::map_dfc(function(j) {
+  #(seq_len(nrowy)) %>% 
+    apply(data.frame(seq_len(nrowy)), 2, function(k) {
+      dist_facet <- apply(data.frame(2:(ncoly-1)), 2, function(i) {
+        dist <- ((i + 1):ncoly) %>% 
+          map_df(funtion(j){
+          #apply(data.frame((i + 1):ncoly),2, function(j) {
               m1 <- sim_panel_quantiles %>% magrittr::extract(k,i) %>% unlist()
               m2 <- sim_panel_quantiles %>% magrittr::extract(k,j) %>% unlist()
               z <- JS(prob = quantile_prob, m1, m2)
@@ -31,15 +31,14 @@ distance_panel <- function(sim_panel_quantiles,
               }
               return(z)
             })
-          dist %>% 
-            select_if(is_na) 
+       dist[not_is_na(dist)]
         })
-      bind_cols(id_facet = k, dist_facet = dist_facet)
+      bind_rows(id_facet = k, dist_facet = unname(dist_facet))
       
     })
 }
 
-is_na <- function(x) any(!is.na(x))
+not_is_na <- function(x) any(!is.na(x))
 
 JS <- function(prob, q, p) {
   # Compute approximate densities
