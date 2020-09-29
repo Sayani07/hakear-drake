@@ -11,7 +11,11 @@ the_plan <-
        sim_null_orig  = sim_panel_grid (range_nx = 2:5, 
                                           range_nfacet = 2:5,
                                           ntimes = 500,
-                                          sim_dist = distributional::dist_normal(5, 10 )),
+                                          sim_dist = distributional::dist_normal(5, 10)),
+       
+      
+       #sim_null_max_dist = why_normalise(sim_null_orig),
+        
       
       # plot panel grid
       
