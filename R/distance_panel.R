@@ -12,8 +12,8 @@
 distance_panel <- function(sim_panel_quantiles,
                            quantile_prob = seq(0.01, 0.99, 0.01),
                            dist_ordered = TRUE) {
-  ncoly <- ncol(sim_panel_quantiles)
-  nrowy <- nrow(sim_panel_quantiles)
+  ncoly <- sim_panel_quantiles %>% distinct(id_facet) %>% nrow()
+  nrowy <- sim_panel_quantiles %>% distinct(id_x) %>% nrow()
   
   #(seq_len(nrowy)) %>% 
   (seq_len(nrowy)) %>% 
@@ -22,8 +22,14 @@ distance_panel <- function(sim_panel_quantiles,
         purrr::map_dfc(function(i) {
           dist <- ((i + 1):ncoly) %>%
             purrr::map_dfc(function(j) {
-              m1 <- sim_panel_quantiles %>% magrittr::extract(k,i) %>% unlist()
-              m2 <- sim_panel_quantiles %>% magrittr::extract(k,j) %>% unlist()
+              m1 <- sim_panel_quantiles %>% 
+                dplyr::filter(id_facet ==k, id_x == i)  %>%
+                select(sim_data_quantile) %>% 
+                unlist()
+              m2 <- sim_panel_quantiles %>% 
+                dplyr::filter(id_facet ==k, id_x == j)%>%
+                select(sim_data_quantile) %>% 
+                unlist()
               z <- JS(prob = quantile_prob, m1, m2)
               if (dist_ordered) {
                 if (j != i + 1) {
