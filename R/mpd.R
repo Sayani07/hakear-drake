@@ -29,8 +29,8 @@ mpd <- function(sim_panel_data, distance_panel_data, nperm = 2000) {
           z = NULL
           
           perm_data <- sim_panel_data %>% 
-            dplyr::group_by(id_facet) %>% 
-          shuffle_data() %>% 
+            #dplyr::group_by(id_facet) %>% 
+            shuffle_x_for_each_facet() %>% 
             compute_quantiles() %>% 
             distance_panel() %>% 
             pivot_longer(-1, names_to = "dist", 
