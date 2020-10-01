@@ -16,20 +16,22 @@ distance_panel <- function(sim_panel_quantiles,
   nrowy <- sim_panel_quantiles %>% distinct(id_x) %>% nrow()
   
   #(seq_len(nrowy)) %>% 
-  (seq_len(nrowy)) %>% 
+  (seq_len(ncoly)) %>% 
     purrr::map_dfr(function(k) {
-      dist_facet <- (2:(ncoly-1)) %>%
+      dist_facet <- (1:(nrowy-1)) %>%
         purrr::map_dfc(function(i) {
-          dist <- ((i + 1):ncoly) %>%
+          dist <- ((i + 1):nrowy) %>%
             purrr::map_dfc(function(j) {
               m1 <- sim_panel_quantiles %>% 
-                dplyr::filter(id_facet ==k, id_x == i)  %>%
+                dplyr::filter(id_facet == k, id_x == i)  %>%
                 select(sim_data_quantile) %>% 
                 unlist()
+              
               m2 <- sim_panel_quantiles %>% 
                 dplyr::filter(id_facet ==k, id_x == j)%>%
                 select(sim_data_quantile) %>% 
                 unlist()
+              
               z <- JS(prob = quantile_prob, m1, m2)
               if (dist_ordered) {
                 if (j != i + 1) {
@@ -41,6 +43,7 @@ distance_panel <- function(sim_panel_quantiles,
           dist %>% 
             select_if(not_is_na) 
         })
+      
       bind_cols(id_facet = k, dist_facet = dist_facet)
       
     })

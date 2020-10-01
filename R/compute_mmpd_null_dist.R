@@ -29,7 +29,7 @@ compute_mmpd_null_dist <- function(sim_null_orig, nsim = 500) {
   map_df(function(i)
     {
   shuffled_data <- sim_null_orig %>%
-    shuffle_data()
+    shuffle_x_for_each_facet()
     # mutate(samp = map2(data, n, sample_n)) %>% 
     # select(-data) %>% 
     # unnest(samp)

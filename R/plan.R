@@ -1,6 +1,3 @@
-library(drake)
-library(dplyr)
-library(tidyr)
 the_plan <-
     drake_plan(
 
@@ -31,7 +28,7 @@ the_plan <-
       # compute mmpd distribution for each panel
     set.seed(54321),  
     mmpd_dist_null_grid =   compute_mmpd_null_dist(sim_null_orig,
-                                              nsim = 500),
+                                              nsim = 50),
      
     
     # visualise mmpd distribution for entire panel grid
@@ -78,14 +75,18 @@ the_plan <-
 #'       distance_panel_data  = distance_panel(sim_panel_quantiles, #method = "JS",
 #'                                            dist_ordered = FALSE)
 #'       #
-#'     #shuffled_data = shuffle_data(sim_panel_data),
 #' # 
 #' #        compute mpd - normalised max pairwise distances for each facet
 #'       normx_data = mpd(sim_panel_data, distance_panel_data,
 #'                        nperm = 2)
-#'       #  # compute mmpd - normalised max pairwise distances across all facets
+#'       #  # compute mmpd - no
+#'       
+#'       
+#'       
+#'       rmalised max pairwise distances across all facets
 #'       #  # change the function names
-#'        normfacet_data = mmpd(normx_data,
-#'                               nperm = 20),
+#'        normfacet_data = mmpd(sim_panel_data, 
+#'        normx_data,
+#'                               nperm = 20)
 
 )

@@ -23,7 +23,9 @@ compute_mmpd_panel_grid <- function(sim_null_orig, quantile_prob = seq(0.01,
           
   mmpd <- sim_null_orig %>% 
   dplyr::filter(nx == i, nfacet == j) %>%  
-  compute_mmpd_panel(quantile_prob, dist_ordered, nperm = nperm)
+  compute_mmpd_panel(quantile_prob, 
+                     dist_ordered, 
+                     nperm = nperm)
   
   bind_cols(nx = i, nfacet = j, mmpd = mmpd)
         

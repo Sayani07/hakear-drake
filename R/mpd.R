@@ -9,7 +9,7 @@
 ##' @author Sayani07
 ##' @export
 
-source("R/shuffle_data.R")
+source("R/shuffle_x_for_each_facet.R")
 mpd <- function(sim_panel_data, distance_panel_data, nperm = 2000) {
   nfacet <- nrow(distance_panel_data)
 
