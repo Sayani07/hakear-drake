@@ -27,9 +27,9 @@ distance_panel <- function(sim_panel_quantiles,
         i_range <- data.frame(1:(nrowy-1))
         dist_facet <- apply(i_range, 1, function(i) {
           
-          dist <- ((i + 1):nrowy) %>%
+        j_range <-   data.frame(((i + 1):nrowy))
           
-              purrr::map_dfc(function(j) {
+          dist <- apply(j_range, 1, function(j) {
               m1 <- sim_panel_quantiles %>% 
                 dplyr::filter(id_facet == k, id_x == i)  %>%
                 select(sim_data_quantile) %>% 
@@ -47,7 +47,8 @@ distance_panel <- function(sim_panel_quantiles,
                 }
               }
               return(z)
-            })
+            }) %>% t() %>% as_tibble()
+          
           dist %>% 
             select_if(not_is_na) 
         }) %>% bind_cols()
