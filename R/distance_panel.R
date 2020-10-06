@@ -36,7 +36,7 @@ distance_panel <- function(sim_panel_quantiles,
                 unlist()
               
               m2 <- sim_panel_quantiles %>% 
-                dplyr::filter(id_facet ==k, id_x == j)%>%
+                dplyr::filter(id_facet == k, id_x == j)%>%
                 select(sim_data_quantile) %>% 
                 unlist()
               
