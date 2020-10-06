@@ -8,8 +8,8 @@ the_plan <-
       
       # simulate many panel data with x levels and facets
        set.seed(9999),
-       sim_null_orig  = sim_panel_grid (range_nx = 2:5, 
-                                          range_nfacet = 2:5,
+       sim_null_orig  = sim_panel_grid (range_nx = c(2, seq(3,15,2)), 
+                                          range_nfacet = c(2, seq(3,15,2)),
                                           ntimes = 500,
                                           sim_dist = distributional::dist_normal(5, 10)),
        
@@ -27,11 +27,11 @@ the_plan <-
       mmpd_null_orig = compute_mmpd_panel_grid(sim_null_orig,
                                      quantile_prob = seq(0.01, 0.99, 0.01),
                                      dist_ordered = TRUE,
-                                     nperm = 20),
+                                     nperm = 15),
       # compute mmpd distribution for each panel
     set.seed(54321),  
     mmpd_dist_null_grid =   compute_mmpd_null_dist(sim_null_orig,
-                                              nsim = 50),
+                                              nsim = 100),
      
     
     # visualise mmpd distribution for entire panel grid
