@@ -19,7 +19,7 @@ compute_quantiles <- function(sim_panel_data, quantile_prob = seq(0.01, 0.99,0.0
     # for each group find quantiles
     group_by(id_facet, id_x) %>% 
     summarize(list_data = list(sim_data), 
-              sim_data_quantile = quantile(unlist(list_data), quantile_prob)) %>% ungroup() %>% select(-list_data) %>% 
+              sim_data_quantile = quantile(unlist(list_data), quantile_prob), .groups = 'drop') %>% ungroup() %>% select(-list_data) %>% 
     nest(sim_data_quantile = sim_data_quantile)
     # put each x on the columns so that pairwise distance could be computed
     # pivot_wider(id_cols = c(1,2,4),
