@@ -1,3 +1,6 @@
+library(drake)
+library(dplyr)
+library(tidyr)
 the_plan <-
     drake_plan(
 
