@@ -20,7 +20,7 @@ shuffle_x_for_each_facet <- function(sim_panel_data) {
   nfacet <- sim_panel_data %>% distinct(nfacet) %>% .$nfacet
   
   
-  shuffled_data <- lapply(nfacet, function(i){
+  shuffled_data <- mclapply(nfacet, function(i){
   #shuffled_data <- (seq_len(nfacet)) %>% 
     #map_df(function(i){
       #(nx)%>%
