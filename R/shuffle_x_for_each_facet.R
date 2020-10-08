@@ -20,14 +20,17 @@ shuffle_x_for_each_facet <- function(sim_panel_data) {
   nfacet <- sim_panel_data %>% distinct(nfacet) %>% .$nfacet
   
   
-  shuffled_data <- (seq_len(nfacet)) %>% 
-    map_df(function(i){
+  shuffled_data <- lapply(nfacet, function(i){
+  #shuffled_data <- (seq_len(nfacet)) %>% 
+    #map_df(function(i){
       #(nx)%>%
         #map_df(function(j){
-          filter_data = sim_panel_data %>% dplyr::filter(id_facet==i)
+          filter_data = sim_panel_data %>% dplyr::filter(nfacet==i)
           new_sim_data = sample(filter_data$sim_data, nrow(filter_data))
           bind_cols(filter_data, new_sim_data = new_sim_data)
-        }) %>% select(-sim_data) %>% 
+        }) %>% 
+    bind_rows() %>% 
+    select(-sim_data) %>% 
         rename("sim_data" = "new_sim_data")
   
   
