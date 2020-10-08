@@ -63,6 +63,7 @@ the_plan <-
     # 
     # 
 #' @examples
+#' set.seed(5000)
 #'    sim_panel_data  = sim_panel(nx = 7,
 #'                                    nfacet = 4,
 #'                                    ntimes = 500,
@@ -74,18 +75,18 @@ the_plan <-
 #'                                          quantile_prob = seq(0.01, 0.99, 0.01))
 #' 
 #'       # compute pairwise JS distances for each facet
-#' 
+#' set.seed(5000)
 #'       distance_panel_data  = distance_panel(sim_panel_quantiles, #method = "JS",
 #'                                            dist_ordered = FALSE)
 #'       #
-#' # 
+#' set.seed(5000)
 #' #        compute mpd - normalised max pairwise distances for each facet
 #'       normx_data = mpd(sim_panel_data, distance_panel_data,
 #'                        nperm = 2)
 #'       #  # compute mmpd - no
 #'       
 #'       
-#'       
+#' set.seed(5000)      
 #'       rmalised max pairwise distances across all facets
 #'       #  # change the function names
 #'        normfacet_data = mmpd(sim_panel_data, 

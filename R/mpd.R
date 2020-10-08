@@ -10,7 +10,7 @@
 ##' @export
 
 source("R/shuffle_x_for_each_facet.R")
-mpd <- function(sim_panel_data, distance_panel_data, nperm = 2000) {
+mpd <- function(sim_panel_data, distance_panel_data, nperm = 20) {
   nfacet <- nrow(distance_panel_data)
 
   # nperm_data_facet <- lapply(seq_len(nfacet),
@@ -41,7 +41,7 @@ mpd <- function(sim_panel_data, distance_panel_data, nperm = 2000) {
            #z = bind_cols(perm_data = perm_data$perm_data,
         })
       
-      nperm_data_facet <- bind_rows(nperm_data_n, nperm_data_n, .id = "perm_id")
+      nperm_data_facet <- bind_rows(nperm_data_n, nperm_data_n, .id = "perm_id") %>% unnest(perm_data)
 
   nperm_data_facet %>%
     group_by(id_facet) %>%

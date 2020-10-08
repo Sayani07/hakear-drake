@@ -1,6 +1,7 @@
 library(lineprof)
 
 source("R/compute_mmpd_panel.R")
+source("_drake.R")
 
 sim_panel_data  = sim_panel(nx = 7,
                             nfacet = 4,
@@ -32,3 +33,9 @@ l1 <- l
 #   summarize(list_data = list(sim_data), 
 #             sim_data_quantile = quantile(unlist(list_data), quantile_prob)) 
 # )
+
+
+library(tictoc)
+tic()
+r_make()
+toc()

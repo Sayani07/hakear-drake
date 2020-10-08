@@ -18,18 +18,19 @@ distance_panel <- function(sim_panel_quantiles,
   #(seq_len(nrowy)) %>% 
   
   
-  k_range <- seq_len(ncoly) %>% data.frame()
+  #k_range <- seq_len(ncoly) %>% data.frame()
   
-  apply(k_range, 1, function(k) {
+    lapply(seq_len(ncoly), function(k) {
       
-      
+    #nperm_data_n <- mclapply(2:nperm, 
+     #                        function(i) 
         
-        i_range <- data.frame(1:(nrowy-1))
-        dist_facet <- apply(i_range, 1, function(i) {
+        #i_range <- data.frame(1:(nrowy-1))
+        dist_facet <- lapply(1:(nrowy-1), function(i) {
           
-        j_range <-   data.frame(((i + 1):nrowy))
+        #j_range <-   data.frame(((i + 1):nrowy))
           
-          dist <- apply(j_range, 1, function(j) {
+          dist <- lapply((i + 1):nrowy, function(j) {
               m1 <- sim_panel_quantiles %>% 
                 dplyr::filter(id_facet == k, id_x == i)  %>%
                 select(sim_data_quantile) %>% 
@@ -47,7 +48,7 @@ distance_panel <- function(sim_panel_quantiles,
                 }
               }
               return(z)
-            }) %>% t() %>% as_tibble()
+            }) %>% t() %>% as_tibble(.name_repair = "unique")
           
           dist %>% 
             select_if(not_is_na) 
