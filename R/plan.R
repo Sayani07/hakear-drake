@@ -8,29 +8,57 @@ the_plan <-
       
       # simulate many panel data with x levels and facets
        set.seed(9999),
-       sim_null_orig  = sim_panel_grid (range_nx = c(2, seq(3,15,2)), 
-                                          range_nfacet = c(2, seq(3,15,2)),
+       sim_null_orig  = sim_panel_grid (range_nx = c(2, 3, 4), 
+                                        #seq(3,15,2)
+                                          range_nfacet = c(2,3,4),
                                           ntimes = 500,
                                           sim_dist = distributional::dist_normal(5, 10)),
        
+     # neat way to look at it
+     #' sim_null_neat  = sim_null_orig %>% group_by(nfacet, nx) %>% nest()   
+     #' sim_null_neat
+       
+       
+       # split it into groups (each with a list) so that you can distribute it across cores
+       
+    sim_null_split = group_split(sim_null_orig,
+                                   nx, nfacet),
       
        #sim_null_max_dist = why_normalise(sim_null_orig),
         
       
       # plot panel grid
+      # as facet and x-axis levels increase. there are more observation as for each combination ntimes observations are generated
       
-      #plot_sim_null = plot_panel_grid(sim_null_orig),
-      #ggplot(sim_null_orig, aes(x = sim_data)) + geom_histogram() + facet_grid(nx~nfacet)
+      #'plot_sim_null = sim_null_orig %>% 
+      #'ggplot() +
+      #'geom_histogram(aes(x = sim_data)) + 
+      #'facet_grid(nx~nfacet),
       
-      # compute mmpd for each panel
-      set.seed(9999),
-      mmpd_null_orig = compute_mmpd_panel_grid(sim_null_orig,
-                                     quantile_prob = seq(0.01, 0.99, 0.01),
-                                     dist_ordered = TRUE,
-                                     nperm = 15),
+      # compute mmpd for each panel in the entire grid
+    set.seed(9999),
+    mmpd_null_orig = mclapply(
+      seq_len(length(sim_null_split)),
+                              function(i){
+      compute_mmpd_panel(sim_null_split[[i]],
+                         nperm = 20, 
+                         dist_ordered = TRUE)
+    }),
+    
+    # see how observed mmpd looks for the grid
+    
+#'    sim_null_neat %>% select(1:2) %>%
+#'     ungroup() %>% bind_cols(bind_rows(mmpd = unlist(mmpd_null_orig)))
+    
+      mmpd_null_orig = 
+      compute_mmpd_panel_grid(
+        sim_null_split,
+        quantile_prob = seq(0.01, 0.99, 0.01),
+        dist_ordered = TRUE,
+        nperm = 2),
       # compute mmpd distribution for each panel
     set.seed(54321),  
-    mmpd_dist_null_grid =   compute_mmpd_null_dist(sim_null_orig,
+    mmpd_dist_null_grid = compute_mmpd_null_dist(sim_null_orig,
                                               nsim = 100),
      
     
