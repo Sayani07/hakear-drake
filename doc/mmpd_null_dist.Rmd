@@ -10,6 +10,7 @@ library(knitr)
 knitr::opts_chunk$set(echo = FALSE,
   warning = FALSE,
   message = FALSE,
+  eval = FALSE,
   comment = "#>",
   fig.path = "figure/",
   fig.align = "center",
@@ -41,7 +42,7 @@ Panel grid of x-axis levels (nx) and facet levels (nfacet). If we see across row
 ## Step1 
 _*simulate a grid of data for a combination of a range of x-axis and facet levels with same distribution*_
 
-```{r sim_null_orig}
+```{r sim_null_orig, eval=FALSE}
 data <- readd(sim_null_orig)
 data %>% 
   group_by(nx, nfacet) %>% 
@@ -59,7 +60,7 @@ readd(mmpd_null_orig)
 ## Step3 
 _Shuffle the data nsim times and compute grids of mmpd like in step 2 */nsim/* times_
 
-```{r}
+```{r, eval = FALSE}
 data <- readd(mmpd_dist_null_grid)
 data %>% 
   group_by(nx, nfacet) %>% 
@@ -70,7 +71,7 @@ data %>%
 _visualise the distribution of mmpd in each grid and the size of the test_ _ 
 
 
-```{r}
+```{r, eval = FALSE}
 readd(plot_dist_null_grid)
 ```
 

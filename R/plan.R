@@ -4,19 +4,23 @@ library(tidyr)
 the_plan <-
     drake_plan(
 
+    
+      nsim = 10,
+      # set simulation parameters
+      seed1 = set.seed(9999), # seed while generating random observations
+      range_nx_vec = c(2,seq(3, 15, 2)), # grid with how many x levels
+      range_nfacet_vec = c(2,seq(3, 15, 2)),# grid with how many facet levels
+      
       ## Plan targets in here.
       
       # simulate many panel data with x levels and facets
-       set.seed(9999),
-       sim_null_orig  = sim_panel_grid (range_nx = c(2, 3, 4), 
-                                        #seq(3,15,2)
-                                          range_nfacet = c(2,3,4),
+       sim_null_orig  = sim_panel_grid (range_nx = range_nx_vec,                             range_nfacet =
+        range_nfacet_vec,
                                           ntimes = 500,
                                           sim_dist = distributional::dist_normal(5, 10)),
        
      # neat way to look at it
-     #' sim_null_neat  = sim_null_orig %>% group_by(nfacet, nx) %>% nest()   
-     #' sim_null_neat
+     sim_null_neat  = sim_null_orig %>% group_by(nfacet, nx) %>% nest(),
        
        
        # split it into groups (each with a list) so that you can distribute it across cores
@@ -36,35 +40,71 @@ the_plan <-
       #'facet_grid(nx~nfacet),
       
       # compute mmpd for each panel in the entire grid
-    set.seed(9999),
+
     mmpd_null_orig = mclapply(
-      seq_len(length(sim_null_split)),
-                              function(i){
-      compute_mmpd_panel(sim_null_split[[i]],
-                         nperm = 20, 
-                         dist_ordered = TRUE)
-    }),
-    
+      sim_null_split,
+      function(x){
+        compute_mmpd_panel(x,
+                           nperm = 10, 
+                           dist_ordered = TRUE)
+      }),
+    # 
+    #   seq_len(length(sim_null_split)),
+    #                           function(i){
+    #  
+    # }),
+    # 
     # see how observed mmpd looks for the grid
     
 #'    sim_null_neat %>% select(1:2) %>%
 #'     ungroup() %>% bind_cols(bind_rows(mmpd = unlist(mmpd_null_orig)))
-    
-      mmpd_null_orig = 
-      compute_mmpd_panel_grid(
-        sim_null_split,
-        quantile_prob = seq(0.01, 0.99, 0.01),
-        dist_ordered = TRUE,
-        nperm = 2),
+#'     
+
       # compute mmpd distribution for each panel
-    set.seed(54321),  
-    mmpd_dist_null_grid = compute_mmpd_null_dist(sim_null_orig,
-                                              nsim = 100),
-     
+mmpd_null_dist = mclapply(
+  seq_len(length(sim_null_split)),
+  function(i){
+  replicate(nsim,
+            {compute_mmpd_panel(shuffle_x_for_each_facet(sim_null_split[[i]]),
+                                nperm = 10, 
+                                dist_ordered = TRUE)})
+}),
+
+
+null_neat  = sim_null_neat %>% select(1:2) %>% 
+  ungroup() %>% group_split(nx,nfacet) ,
+
+mmpd_dist_null_data = t(mapply(bind_cols, null_neat, mmpd = mmpd_null_dist)) %>% as_tibble() %>% unnest(c(nfacet, nx, mmpd)),
+
+mmpd_null_orig_data = t(mapply(bind_cols, null_neat, mmpd =  mmpd_null_orig)) %>% as_tibble() %>% unnest(c(nfacet, nx, mmpd)),
+
     
     # visualise mmpd distribution for entire panel grid
-    plot_dist_null_grid =   plot_mmpd_null_grid(mmpd_dist_null_grid,
-                                                mmpd_null_orig),  
+    # plot_data  =  plot_mmpd_null_grid(mmpd_dist_null_data, mmpd_null_orig_data),  
+
+joined_data = left_join(mmpd_dist_null_data, mmpd_null_orig_data,
+                         by = c("nx", "nfacet")),
+
+# number of times shuffled difference exceed true difference
+
+compute_p_value = joined_data %>% 
+  group_by(nx, nfacet) %>% 
+  summarize(p_value = mean(abs(mmpd.x)> abs(mmpd.y))),
+
+
+ggplot() + 
+  geom_histogram(data = mmpd_dist_null_data, 
+                 aes(x = mmpd))  + 
+  geom_vline(data = joined_data, 
+             aes(xintercept = mmpd.y), colour = "red") +
+  geom_text(data = compute_p_value, size = 3,  
+            aes(x = -Inf,
+                y =  Inf,
+                label = paste("p-value:",p_value),
+                hjust   = 0,
+                vjust   = 1)) + 
+  facet_grid(nx ~ nfacet),
+
     # analysis file
     report = target(
       command = {
