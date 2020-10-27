@@ -10,7 +10,9 @@
 ##' @return
 ##' @author Sayani07
 ##' @export
-sim_panel <- function(nx = 2, nfacet = 3, ntimes = 5, sim_dist =
+
+sim_panel <- function(nx = 2, nfacet = 3, 
+                      ntimes = 5, sim_dist =
                         distributional::dist_normal(5, 10)) {
   if(length(sim_dist)==1)
   {
@@ -26,5 +28,9 @@ sim_panel <- function(nx = 2, nfacet = 3, ntimes = 5, sim_dist =
              id_x) %>%
     summarise(sim_data = generate(sim_dist, times = ntimes), .groups = 'drop') %>% unnest(sim_data)
   
-  bind_cols(nfacet = nfacet, nx = nx, sim_data = sim_data2)
+  sim_data2 %>% mutate(nfacet = nfacet, nx = nx) %>% 
+    select(nfacet, nx, id_facet, id_x, sim_data)%>% 
+    group_by(nfacet, nx,
+             id_facet, id_x)  %>% 
+    nest()
 }
