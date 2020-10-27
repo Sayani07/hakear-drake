@@ -10,7 +10,7 @@
 ##' @return
 ##' @author Sayani Gupta
 ##' @export
-sim_panel_grid <- function(range_nx = 2:7, range_nfacet = 2:7, ntimes = 5000, sim_dist = distributional::dist_normal(5, 10)) {
+sim_panel_grid <- function(range_nx = 2:7, range_nfacet = 2:7, ntimes = 5000, sim_dist = sim_null_dist1) {
 
   
 (range_nx) %>%
