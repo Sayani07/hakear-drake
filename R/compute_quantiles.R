@@ -10,6 +10,7 @@
 ##' @export
 compute_quantiles <- function(sim_panel_data, quantile_prob = seq(0.01, 0.99,0.01)) {
 
+  sim_panel_data = sim_panel_data %>% unnest(data)
   facet <- unique(sim_panel_data$id_facet)
   nfacet <- length(facet)
   
