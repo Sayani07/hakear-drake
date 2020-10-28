@@ -15,15 +15,21 @@ dist_ordered_val = TRUE
 
 #' variable (maybe) global parameters
 # grid with how many facet levels
-range_nfacet_vec = c(2, 3, 4, 5, 7, 9, 14, 21, 24, 31)
+#range_nfacet_vec = c(2, 3, 4, 5, 7, 9, 14, 21, 24, 31)
+range_nfacet_vec = c(2, 3, 4)
 # grid with how many x levels
-range_nx_vec = c(2, 3, 4, 5, 7, 9, 14, 21, 24, 31)
+#range_nx_vec = c(2, 3, 4, 5, 7, 9, 14, 21, 24, 31)
+range_nx_vec = c(2, 3, 4)
+
 # number of observations to be generated
-ntimes_val = 500
+#ntimes_val = 500
+ntimes_val = 50
 # number of permutation of data done to compute estimates
-nperm_val = 10
+#nperm_val = 10
+nperm_val = 2
 # number of permutations of data done to display histogram for each panel
-nsim_val = 100
+#nsim_val = 100
+nsim_val = 2
 
 # Null parameters
 mean = 5
@@ -36,41 +42,47 @@ nx = 4
 nfacet = 5
 
 # Design 1: Null
-sim_null_dist1 = distributional::dist_normal(mean, sd)
+sim_null_dist1 = function(nx, nfacet){
+  rep(distributional::dist_normal(mean, sd), nx*nfacet)
+}
+sim_null_dist2 = function(nx, nfacet){
+  distributional::dist_exponential(rate)}
 
-sim_null_dist2 = distributional::dist_exponential(rate)
+sim_null_dist3 = function(nx, nfacet){
+  distributional::dist_gamma(shape, rate)}
 
-sim_null_dist3 = distributional::dist_gamma(shape, rate)
-
-sim_null_dist4 = distributional::dist_webull(shape, scale)
+sim_null_dist4 = function(nx, nfacet){
+  distributional::dist_webull(shape, scale)}
 
 
 # Design 2: Alternate where only distributions across facet varies     
-sim_varf_dist1 = rep(dist_normal(seq(mean,mean*nfacet, by = mean), sd), each = nx)
+sim_varf_dist1 = function(nx, nfacet){
+  rep(dist_normal(seq(mean,mean*nfacet, by = mean), sd), each = nx)}
 
-sim_varf_dist2 = rep(dist_exponential(seq(rate, rate*nfacet, by = rate)), each = nx)
+sim_varf_dist2 = function(nx, nfacet){rep(dist_exponential(seq(rate, rate*nfacet, by = rate)), each = nx)}
 
-sim_varf_dist3 = rep(dist_gamma(seq(shape, shape*nfacet, by = shape), rate), each = nx)
+sim_varf_dist3 = function(nx, nfacet){rep(dist_gamma(seq(shape, shape*nfacet, by = shape), rate), each = nx)}
 
-sim_varf_dist4 = rep(dist_weibull(seq(shape, shape*nfacet, by = shape), scale), each = nx)
+sim_varf_dist4 = function(nx, nfacet){rep(dist_weibull(seq(shape, shape*nfacet, by = shape), scale), each = nx)}
 
 # Design 3: Alternate where only distributions across x-varies
 
-sim_varx_dist1 = rep(dist_normal(seq(mean,mean*nx, by = mean), sd), nfacet)
+sim_varx_dist1 = function(nx, nfacet){rep(dist_normal(seq(mean,mean*nx, by = mean), sd), nfacet)}
 
-sim_varx_dist2 = rep(dist_exponential(seq(rate, rate*nx, by = rate)), nfacet)
+sim_varx_dist2 = function(nx, nfacet){rep(dist_exponential(seq(rate, rate*nx, by = rate)), nfacet)}
 
-sim_varx_dist3 = rep(dist_gamma(seq(shape, shape*nx, by = shape), rate),nfacet)
+sim_varx_dist3 = function(nx, nfacet){rep(dist_gamma(seq(shape, shape*nx, by = shape), rate),nfacet)}
 
-sim_varx_dist4 = rep(dist_weibull(seq(shape, shape*nx, by = shape), scale), nfacet)
+sim_varx_dist4 = function(nx, nfacet){rep(dist_weibull(seq(shape, shape*nx, by = shape), scale), nfacet)}
 
 
 # Design 4: Alternate where all distribution varies
 
-sim_varall_dist1 = dist_normal(seq(mean,mean*nfacet*nx, by = mean), sd)
+sim_varall_dist1 = function(nx, nfacet){dist_normal(seq(mean,mean*nfacet*nx, by = mean), sd)}
 
-sim_varall_dist2 = dist_exponential(seq(rate, rate*nfacet*nx, by = rate))
+sim_varall_dist2 = function(nx, nfacet){dist_exponential(seq(rate, rate*nfacet*nx, by = rate))}
 
-sim_varall_dist3 = rep(dist_gamma(seq(shape, shape*nfacet*nx, by = shape), rate))
+sim_varall_dist3 = function(nx, nfacet){rep(dist_gamma(seq(shape, shape*nfacet*nx, by = shape), rate))}
 
-sim_varall_dist4 = dist_weibull(seq(shape, shape*nfacet*nx, by = shape), scale)
+sim_varall_dist4 = function(nx, nfacet){dist_weibull(seq(shape, shape*nfacet*nx, by = shape), scale)}
+
