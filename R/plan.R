@@ -66,7 +66,7 @@ mmpd_null_dist = mclapply(
   function(i){
   replicate(nsim,
             {compute_mmpd_panel(shuffle_x_for_each_facet(sim_null_split[[i]]),
-                                nperm = 10, 
+                                nperm = 2, 
                                 dist_ordered = TRUE)})
 }),
 
@@ -87,23 +87,23 @@ joined_data = left_join(mmpd_dist_null_data, mmpd_null_orig_data,
 
 # number of times shuffled difference exceed true difference
 
-compute_p_value = joined_data %>% 
-  group_by(nx, nfacet) %>% 
-  summarize(p_value = mean(abs(mmpd.x)> abs(mmpd.y))),
-
-
-ggplot() + 
-  geom_histogram(data = mmpd_dist_null_data, 
-                 aes(x = mmpd))  + 
-  geom_vline(data = joined_data, 
-             aes(xintercept = mmpd.y), colour = "red") +
-  geom_text(data = compute_p_value, size = 3,  
-            aes(x = -Inf,
-                y =  Inf,
-                label = paste("p-value:",p_value),
-                hjust   = 0,
-                vjust   = 1)) + 
-  facet_grid(nx ~ nfacet),
+# compute_p_value = joined_data %>% 
+#   group_by(nx, nfacet) %>% 
+#   summarize(p_value = mean(abs(mmpd.x)> abs(mmpd.y))),
+# 
+# 
+# ggplot() + 
+#   geom_histogram(data = mmpd_dist_null_data, 
+#                  aes(x = mmpd))  + 
+#   geom_vline(data = joined_data, 
+#              aes(xintercept = mmpd.y), colour = "red") +
+#   geom_text(data = compute_p_value, size = 3,  
+#             aes(x = -Inf,
+#                 y =  Inf,
+#                 label = paste("p-value:",p_value),
+#                 hjust   = 0,
+#                 vjust   = 1)) + 
+#   facet_grid(nx ~ nfacet),
 
     # analysis file
     report = target(
