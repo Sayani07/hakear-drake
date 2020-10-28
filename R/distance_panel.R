@@ -32,16 +32,16 @@ distance_panel <- function(sim_panel_quantiles,
           
           dist <- lapply((i + 1):nrowy, function(j) {
               m1 <- sim_panel_quantiles %>% 
+                unnest(cols = c(sim_data_quantile)) %>% 
                 dplyr::filter(id_facet == k, id_x == i)  %>%
-                select(sim_data_quantile) %>% 
-                unlist()
+                select(sim_data_quantile)
               
               m2 <- sim_panel_quantiles %>% 
+                unnest(cols = c(sim_data_quantile)) %>% 
                 dplyr::filter(id_facet == k, id_x == j)%>%
-                select(sim_data_quantile) %>% 
-                unlist()
+                select(sim_data_quantile) 
               
-              z <- JS(prob = quantile_prob, m1, m2)
+              z <- JS(prob = quantile_prob, m1$sim_data_quantile, m2$sim_data_quantile)
               if (dist_ordered) {
                 if (j != i + 1) {
                   z <- NA
