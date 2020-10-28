@@ -48,7 +48,7 @@ distance_panel <- function(sim_panel_quantiles,
                 }
               }
               return(z)
-            }) %>% t() %>% as_tibble(.name_repair = "unique")
+            }) %>% t() %>% as_tibble( .name_repair = ~ vctrs::vec_as_names(..., repair = "unique", quiet = TRUE))
           
           dist %>% 
             select_if(not_is_na) 
