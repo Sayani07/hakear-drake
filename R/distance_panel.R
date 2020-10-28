@@ -72,9 +72,9 @@ JS <- function(prob, q, p) {
 }
 
 # Compute approximate discretized density (like a probability mass function)
-# at each x (equally spaced) given quantiles q with probabilities p
+# at each x (equally spaced) given quantiles q with probabilities p 
 pmf <- function(x, p, q) {
-  qcdf <- stats::approx(q, p, xout = x, yleft = 0, yright = 1, ties = mean)$y
+  qcdf <- stats::approx(q, p, xout = x, yleft = 0, yright = 1, ties = max, na.rm = TRUE)$y
   qpmf <- c(0, diff(qcdf) / (x[2] - x[1]))
   return(qpmf / sum(qpmf))
 }
