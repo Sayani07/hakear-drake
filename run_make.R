@@ -1,10 +1,9 @@
 library(drake)
-drake::drake_cache("/Users/sgup0008/Documents/hakear-drake/.drake")$unlock()
 library(tictoc)
  source("_drake.R")
  loadd()
 tic()
-r_make()
+make(the_plan, parallelism = "clustermq", jobs = 4)
 toc()
 
 # 819.644 sec elapsed
