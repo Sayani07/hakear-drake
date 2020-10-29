@@ -22,7 +22,7 @@ the_plan <-
       
       # number of observations to be generated
       #ntimes_val = 500
-      ntimes_val = 50,
+      ntimes_val = 500,
       # number of permutation of data done to compute estimates
       #nperm_val = 10
       nperm_val = 2,
@@ -84,8 +84,10 @@ the_plan <-
       
       sim_varall_weibull = function(nx, nfacet){dist_weibull(seq(shape, shape*nfacet*nx, by = shape), scale)},
       
-# create grid for each of the 16 designs      
-null_norm = 
+# create grid for each of the 16 designs
+
+# Null design      
+null_normal = 
   create_mmpd_grid(
     sim_dist = sim_null_normal,
     range_nfacet = range_nfacet_vec, 
@@ -127,8 +129,149 @@ null_weibull =
     nperm = nperm_val,
     nsim = nsim_val, 
     quantile_prob = quantile_prob_vec, 
+    dist_ordered = dist_ordered_val),
+
+# varf design      
+varf_normal = 
+  create_mmpd_grid(
+    sim_dist = sim_varf_normal,
+    range_nfacet = range_nfacet_vec, 
+    range_nx = range_nx_vec, 
+    ntimes = ntimes_val, 
+    nperm = nperm_val,
+    nsim = nsim_val, 
+    quantile_prob = quantile_prob_vec, 
+    dist_ordered = dist_ordered_val),
+
+varf_exp = 
+  create_mmpd_grid(
+    sim_dist = sim_varf_exp,
+    range_nfacet = range_nfacet_vec, 
+    range_nx = range_nx_vec, 
+    ntimes = ntimes_val, 
+    nperm = nperm_val,
+    nsim = nsim_val, 
+    quantile_prob = quantile_prob_vec, 
+    dist_ordered = dist_ordered_val),
+
+varf_gamma = 
+  create_mmpd_grid(
+    sim_dist = sim_varf_gamma,
+    range_nfacet = range_nfacet_vec, 
+    range_nx = range_nx_vec, 
+    ntimes = ntimes_val, 
+    nperm = nperm_val,
+    nsim = nsim_val, 
+    quantile_prob = quantile_prob_vec, 
+    dist_ordered = dist_ordered_val),
+
+varf_weibull = 
+  create_mmpd_grid(
+    sim_dist = sim_varf_weibull,
+    range_nfacet = range_nfacet_vec, 
+    range_nx = range_nx_vec, 
+    ntimes = ntimes_val, 
+    nperm = nperm_val,
+    nsim = nsim_val, 
+    quantile_prob = quantile_prob_vec, 
+    dist_ordered = dist_ordered_val),
+
+
+# varx design      
+varx_normal = 
+  create_mmpd_grid(
+    sim_dist = sim_varx_normal,
+    range_nfacet = range_nfacet_vec, 
+    range_nx = range_nx_vec, 
+    ntimes = ntimes_val, 
+    nperm = nperm_val,
+    nsim = nsim_val, 
+    quantile_prob = quantile_prob_vec, 
+    dist_ordered = dist_ordered_val),
+
+varx_exp = 
+  create_mmpd_grid(
+    sim_dist = sim_varx_exp,
+    range_nfacet = range_nfacet_vec, 
+    range_nx = range_nx_vec, 
+    ntimes = ntimes_val, 
+    nperm = nperm_val,
+    nsim = nsim_val, 
+    quantile_prob = quantile_prob_vec, 
+    dist_ordered = dist_ordered_val),
+
+varx_gamma = 
+  create_mmpd_grid(
+    sim_dist = sim_varx_gamma,
+    range_nfacet = range_nfacet_vec, 
+    range_nx = range_nx_vec, 
+    ntimes = ntimes_val, 
+    nperm = nperm_val,
+    nsim = nsim_val, 
+    quantile_prob = quantile_prob_vec, 
+    dist_ordered = dist_ordered_val),
+
+varx_weibull = 
+  create_mmpd_grid(
+    sim_dist = sim_varx_weibull,
+    range_nfacet = range_nfacet_vec, 
+    range_nx = range_nx_vec, 
+    ntimes = ntimes_val, 
+    nperm = nperm_val,
+    nsim = nsim_val, 
+    quantile_prob = quantile_prob_vec, 
+    dist_ordered = dist_ordered_val),
+
+
+# varall design      
+varall_normal = 
+  create_mmpd_grid(
+    sim_dist = sim_varall_normal,
+    range_nfacet = range_nfacet_vec, 
+    range_nx = range_nx_vec, 
+    ntimes = ntimes_val, 
+    nperm = nperm_val,
+    nsim = nsim_val, 
+    quantile_prob = quantile_prob_vec, 
+    dist_ordered = dist_ordered_val),
+
+varall_exp = 
+  create_mmpd_grid(
+    sim_dist = sim_varall_exp,
+    range_nfacet = range_nfacet_vec, 
+    range_nx = range_nx_vec, 
+    ntimes = ntimes_val, 
+    nperm = nperm_val,
+    nsim = nsim_val, 
+    quantile_prob = quantile_prob_vec, 
+    dist_ordered = dist_ordered_val),
+
+varall_gamma = 
+  create_mmpd_grid(
+    sim_dist = sim_varall_gamma,
+    range_nfacet = range_nfacet_vec, 
+    range_nx = range_nx_vec, 
+    ntimes = ntimes_val, 
+    nperm = nperm_val,
+    nsim = nsim_val, 
+    quantile_prob = quantile_prob_vec, 
+    dist_ordered = dist_ordered_val),
+
+varall_weibull = 
+  create_mmpd_grid(
+    sim_dist = sim_varall_weibull,
+    range_nfacet = range_nfacet_vec, 
+    range_nx = range_nx_vec, 
+    ntimes = ntimes_val, 
+    nperm = nperm_val,
+    nsim = nsim_val, 
+    quantile_prob = quantile_prob_vec, 
     dist_ordered = dist_ordered_val)
-    )
+)
+
+
+
+
 
 #'       ## Plan targets in here.
 #'       
