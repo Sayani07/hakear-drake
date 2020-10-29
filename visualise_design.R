@@ -1,22 +1,22 @@
-compute_p_value = null_weibull %>%
-  group_by(nx, nfacet) %>%
-  summarize(p_value = mean(abs(mmpd.x)> abs(mmpd.y)))
-
-ggplot() +
-  geom_histogram(data = null_weibull,
-                 aes(x = mmpd.x))  +
-  geom_vline(data = null_weibull,
-             aes(xintercept = mmpd.y), colour = "red") +
-  geom_text(data = compute_p_value, size = 3,
-            aes(x = -Inf,
-                y =  Inf,
-                label = paste("p-value:",p_value),
-                hjust   = 0,
-                vjust   = 1)) +
-  facet_grid(nx ~ nfacet)
+# compute_p_value = null_weibull %>%
+#   group_by(nx, nfacet) %>%
+#   summarize(p_value = mean(abs(mmpd.x)> abs(mmpd.y)))
+# 
+# ggplot() +
+#   geom_histogram(data = null_weibull,
+#                  aes(x = mmpd.x))  +
+#   geom_vline(data = null_weibull,
+#              aes(xintercept = mmpd.y), colour = "red") +
+#   geom_text(data = compute_p_value, size = 3,
+#             aes(x = -Inf,
+#                 y =  Inf,
+#                 label = paste("p-value:",p_value),
+#                 hjust   = 0,
+#                 vjust   = 1)) +
+#   facet_grid(nx ~ nfacet)
 
 # all together
-
+loadd()
 null_all = bind_rows(normal = null_normal,
                      exponential = null_exp,
                      gamma = null_gamma,
@@ -60,7 +60,7 @@ compute_p_value$design =
 plot_check = ggplot(compute_p_value) +
   geom_point(aes(x=design, y = p_value, 
                  color=distribution,
-                 alpha = 0.05))+
+                 alpha = 0.1))+
   facet_grid(nx~nfacet)
   
 # if all levels have all dist
