@@ -22,5 +22,6 @@ perm_mmpd <- function(sim_panel_data, nperm = 5) {
     perm_mmpd_data <- sample_data %>% compute_mmpd_panel(nperm = 2)
     
     })
-  perm_mmpd_data %>% unlist() %>% as_tibble(.name_repair = "unique")
+  perm_mmpd_data %>% unlist() %>% as_tibble(
+  .name_repair = ~ vctrs::vec_as_names(..., repair = "unique", quiet = TRUE))
 }

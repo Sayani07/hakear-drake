@@ -15,10 +15,10 @@ the_plan <-
       #' variable (maybe) global parameters
       # grid with how many facet levels
       #range_nfacet_vec = c(2, 3, 4, 5, 7, 9, 14, 21, 24, 31)
-      range_nfacet_vec = c(2, 3, 4),
+      range_nfacet_vec = c(2, 3, 4, 5),
       # grid with how many x levels
       #range_nx_vec = c(2, 3, 4, 5, 7, 9, 14, 21, 24, 31)
-      range_nx_vec = c(2, 3, 4),
+      range_nx_vec = c(2, 3, 4, 5),
       
       # number of observations to be generated
       #ntimes_val = 500
@@ -175,7 +175,6 @@ varf_weibull =
     nsim = nsim_val, 
     quantile_prob = quantile_prob_vec, 
     dist_ordered = dist_ordered_val),
-
 
 # varx design      
 varx_normal = 

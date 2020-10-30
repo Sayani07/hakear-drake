@@ -11,7 +11,7 @@
 create_panel <- function(data_orig, ncol = 3, nrow = 2) {
 
     data_orig %>% 
-    as_tibble(.name_repair = "unique") %>% 
+    as_tibble(.name_repair = ~ vctrs::vec_as_names(..., repair = "unique", quiet = TRUE)) %>% 
     mutate(id = row_number()) %>% 
     mutate(panel_id = rep(1:ncol, each = nrow))
 
