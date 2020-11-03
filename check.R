@@ -23,5 +23,5 @@ toc()
 h  = sim_null_neat %>% select(1:2) %>% 
   ungroup() %>% group_split(nx,nfacet) 
 
-mapply(bind_cols, h, mmpd = mmpd_dist_null_grid) %>% t() %>% as_tibble() %>% unnest(c(nfacet, nx, mmpd))
+t(mapply(bind_cols, h, mmpd = mmpd_dist_null_grid)) %>% as_tibble() %>% unnest(c(nfacet, nx, mmpd))
 
