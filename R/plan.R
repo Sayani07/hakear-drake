@@ -16,19 +16,20 @@ the_plan <-
     #' variable (maybe) global parameters
     # grid with how many facet levels
     # range_nfacet_vec = c(2, 3, 4, 5, 7, 9, 14, 21, 24, 31)
-    range_nfacet_vec = c(2, 4, 7, 14, 20, 31),
+    range_nfacet_vec = c(2,3,4),
     # grid with how many x levels
     # range_nx_vec = c(2, 3, 4, 5, 7, 9, 14, 21, 24, 31)
-    range_nx_vec = c(2, 4, 7, 14, 20, 31),
+    # range_nx_vec = c(2, 4, 7, 14, 20, 31),
+    range_nx_vec = c(2,3,4),
     
     # number of observations to be generated
     # ntimes_val = 500
-    ntimes_val = 500,
+    ntimes_val = 50,
     # number of permutation of data done to compute estimates
     # nperm_val = 10
     nperm_val = 100,
     # number of permutations of data done to display histogram for each panel
-    nsim_val = 200,
+    nsim_val = 100,
     # nsim_val = 2,
     
     # Null parameters
@@ -311,34 +312,34 @@ the_plan <-
     #   ),
     
     null_all = bind_rows(
-      normal = null_normal,
+      normal = null_normal[[1]],
       #exponential = null_exp,
-      gamma = null_gamma,
+      gamma = null_gamma[[1]],
       #weibull = null_weibull,
       .id = "distribution"
     ),
     
     varf_all = bind_rows(
-      normal = varf_normal,
+      normal = varf_normal[[1]],
       #exponential = varf_exp,
-      gamma = varf_gamma,
+      gamma = varf_gamma[[1]],
       #weibull = varf_weibull,
       .id = "distribution"
     ),
     
     varx_all = bind_rows(
-      normal = varx_normal,
+      normal = varx_normal[[1]],
       #exponential = varx_exp,
-      gamma = varx_gamma,
+      gamma = varx_gamma[[1]],
       #weibull = varx_weibull,
       .id = "distribution"
     ),
     
     
     varall_all = bind_rows(
-      normal = varall_normal,
+      normal = varall_normal[[1]],
       #exponential = varall_exp,
-      gamma = varall_gamma,
+      gamma = varall_gamma[[1]],
       #weibull = varall_weibull,
       .id = "distribution"
     ),
@@ -351,7 +352,53 @@ the_plan <-
       .id = "design"
     ),
     
-    write_rds(design_all, "data/design_all.rds")
+    write_rds(design_all, "data/design_all.rds"),
+    
+    # Storing time
+    
+    null_time = bind_rows(
+      normal = null_normal[[2]],
+      #exponential = null_exp,
+      gamma = null_gamma[[2]],
+      #weibull = null_weibull,
+      .id = "distribution"
+    ),
+    
+    varf_time = bind_rows(
+      normal = varf_normal[[2]],
+      #exponential = varf_exp,
+      gamma = varf_gamma[[2]],
+      #weibull = varf_weibull,
+      .id = "distribution"
+    ),
+    
+    varx_time = bind_rows(
+      normal = varx_normal[[2]],
+      #exponential = varx_exp,
+      gamma = varx_gamma[[2]],
+      #weibull = varx_weibull,
+      .id = "distribution"
+    ),
+    
+    
+    varall_time = bind_rows(
+      normal = varall_normal[[2]],
+      #exponential = varall_exp,
+      gamma = varall_gamma[[2]],
+      #weibull = varall_weibull,
+      .id = "distribution"
+    ),
+    
+    design_time = bind_rows(
+      null = null_time,
+      vary_f = varf_time,
+      vary_x = varx_time,
+      vary_all = varall_time,
+      .id = "design"
+    ),
+    
+    write_rds(design_time, "data/design_time.rds")
+    
   )
 
 

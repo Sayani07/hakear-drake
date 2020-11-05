@@ -1,7 +1,7 @@
 library(drake)
 library(tictoc)
  source("_drake.R")
- loadd()
+loadd()
 tic()
 make(the_plan, parallelism = "clustermq", jobs = 4)
 toc()
