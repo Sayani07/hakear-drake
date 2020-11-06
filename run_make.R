@@ -14,6 +14,6 @@ toc()
 #   function(i){
 #     replicate(nsim,
 #               {compute_mmpd_panel(shuffle_x_for_each_facet(sim_null_split[[i]]),
-#                                   nperm = 2, 
+#                                   nperm = 2, x
 #                                   dist_ordered = TRUE)})
 #   })

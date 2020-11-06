@@ -1,11 +1,11 @@
-compute_p_value = varx_exp %>%
+compute_p_value = null_gamma[[1]] %>%
   group_by(nx, nfacet) %>%
   summarize(p_value = mean(abs(mmpd.x)> abs(mmpd.y)))
 
 ggplot() +
-  geom_histogram(data = varx_exp,
+  geom_histogram(data = null_gamma[[1]],
                  aes(x = mmpd.x))  +
-  geom_vline(data = varx_exp,
+  geom_vline(data = null_gamma[[1]],
              aes(xintercept = mmpd.y), colour = "red") +
   geom_text(data = compute_p_value, size = 3,
             aes(x = -Inf,
@@ -59,8 +59,7 @@ compute_p_value$design =
   factor(compute_p_value$design,
          levels = c("null","vary_f", "vary_x", "vary_all"))
 
-plot_check = ggplot(compute_p_value
-                    %>% dplyr::filter(distribution=="gamma")) +
+plot_check = ggplot(compute_p_value) +
   geom_point(aes(x=design, y = p_value, 
                  color=distribution),
                  alpha = 0.5)+
