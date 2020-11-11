@@ -17,7 +17,9 @@ compute_mmpd_panel <- function(.data, quantile_prob = seq(0.01,
     compute_quantiles(quantile_prob = quantile_prob) %>% 
     distance_panel(dist_ordered = dist_ordered)
   
-  
-    mpd_data <- mpd(.data, dist_data_panel, nperm)
-    mmpd(.data, mpd_data, nperm)
+    # 
+    # mpd_data <- mpd(.data, dist_data_panel, nperm)
+    # mmpd(.data, mpd_data, nperm)
+    
+    mpd_data <- mpd2(.data, dist_data_panel, nperm)
 }
