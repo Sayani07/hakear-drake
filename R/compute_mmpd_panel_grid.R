@@ -17,8 +17,8 @@ compute_mmpd_panel_grid <- function(sim_null_split, quantile_prob = seq(0.01,
   
   mclapply(seq_len(l), function(i){
     compute_mmpd_panel(sim_null_split[[i]],
-                       nperm = 20, 
-                       dist_ordered = TRUE)
+                       nperm, 
+                       dist_ordered)
   })
 }
   
