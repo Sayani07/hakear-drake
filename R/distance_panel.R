@@ -117,4 +117,3 @@ pmf <- function(x, p, q) {
   qpmf <- c(0, diff(qcdf) / (x[2] - x[1]))
   return(qpmf / sum(qpmf))
 }
-

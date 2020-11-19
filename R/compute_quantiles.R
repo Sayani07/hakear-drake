@@ -9,9 +9,9 @@
 compute_quantiles <- function(sim_panel_data, quantile_prob = seq(0.01, 0.99, 0.01)) {
   facet <- unique(sim_panel_data$id_facet)
   nfacet <- length(facet)
-
+  
   # quantile_prob <- seq(0.01, 0.05, 0.01)
-
+  
   sim_facet_data <- sim_panel_data %>%
     # for each group find quantiles
     group_by(id_facet, id_x) %>%

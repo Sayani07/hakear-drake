@@ -16,10 +16,10 @@ the_plan =
     #' variable (maybe) global parameters
     # grid with how many facet levels
     #range_nfacet_vec = c(2, 3, 4, 5, 7, 9, 14, 21, 24, 31)
-    range_nfacet_vec = c(2, 3, 4, 5, 7, 9, 14), #21, 30, 45
+    range_nfacet_vec = c(21, 30, 45),
     # grid with how many x levels 
     #range_nx_vec = c(2, 3, 4, 5, 7, 9, 14, 21, 24, 31)
-    range_nx_vec = c(2, 3, 4, 5, 7, 9, 14), #  2, 3, 4, 5, 7, 9, 14
+    range_nx_vec = c(2, 3, 4, 5, 7, 9, 14),
     
     # number of observations to be generated
     #ntimes_val = 500
@@ -74,12 +74,11 @@ the_plan =
       sim_grid_split,
       function(x) {
         tic()
-        obj = hakear::compute_mmpd_norm(
+        obj = compute_mmpd(
           x,
           gran_x = "id_x",
           gran_facet = "id_facet",
-          response = sim_data,
-          nperm = nperm_val)
+          response = sim_data)
         t = toc(log = TRUE, quiet = TRUE)
         return(obj)
       }

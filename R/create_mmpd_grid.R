@@ -29,7 +29,8 @@ create_mmpd_grid <- function(
       range_nx, range_nfacet,
       ntimes,
       sim_dist
-    )
+    ) %>%
+    unnest(c(data))
   
   sim_null_split <- sim_null_orig %>%
     group_by(nx, nfacet) %>%

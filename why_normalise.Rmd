@@ -1,0 +1,27 @@
+---
+title: "why_normalise"
+author: "Sayani Gupta"
+date: "14/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(hakear)
+library(distributional)
+source("_drake.R")
+```
+
+```{r data}
+range_nx_vec <- c(2, 4, 7, 14, 21, 31)
+range_nfacet_vec <- c(2, 4, 7, 14, 21, 31)
+range_ntimes <- c(seq(2, 30, 4), 40, 60, 80, 100, 5000)
+
+ sim_null_normal = function(nx, nfacet) {
+      rep(distributional::dist_normal(mean, sd), nx * nfacet)
+   }
+
+
+sim_panel_grid(range_nx = range_nx_vec, range_nfacet = range_nfacet_vec, ntimes = 10, sim_dist = sim_null_normal)
+```
+
